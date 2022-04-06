@@ -1,0 +1,28 @@
+class Solution {
+    public int jump(int[] nums) {
+        int target = nums.length-1;
+        return minJ(nums,0,target,new HashMap<Integer,Integer>());
+        
+    }
+    private int minJ(int[] nums , int ci, int target, HashMap<Integer,Integer> memo)
+    {
+        
+        if(ci>=target)
+            return 0;
+        // if(ci+nums[ci] >= target)
+        //     return 0;
+        
+        int currentKey = ci;
+        if(memo.containsKey(currentKey))
+            return memo.get(currentKey);
+        
+        int ans=100001;
+        for(int i=1;i<=nums[ci];i++)
+        {
+            int check = 1+ minJ(nums,ci+i,target,memo);
+            ans = Math.min(ans,check);
+        }
+        memo.put(currentKey,ans);
+        return ans;
+    }
+}
